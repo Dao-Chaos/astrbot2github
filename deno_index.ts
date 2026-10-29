@@ -1,13 +1,12 @@
-import { serve } from "https://deno.land/std@0.155.0/http/server.ts"; // 或更新到最新稳定版，如 @0.224.0
 
-async function handler(req: Request): Promise<Response> {
-  const incomingUrl = new URL(req.url);
+异步 函数handler(请求: 请求对象)返回Promise<响应对象
+incomingUrl = new URL(req.url);
   if (incomingUrl.pathname === "/") {
-    return new Response(
+    返回 新的 响应(
       "此地址只用于为astrbot提供更快速的github访问服务",
       {
         status: 200, // OK
-        headers: { "Content-Type": "text/plain; charset=utf-8" },
+        头部: { "Content-Type": "text/plain; charset=utf-8" },
       }
     );
   }
@@ -18,9 +17,9 @@ async function handler(req: Request): Promise<Response> {
   const targetUrlString = decodeURIComponent(incomingUrl.pathname.slice(1));
 
   // 2. 验证提取出的字符串是否看起来像一个有效的 URL
-  if (!targetUrlString || (!targetUrlString.startsWith("http://") && !targetUrlString.startsWith("https://"))) {
+  如果 (!targetUrlString || (!targetUrlString.startsWith("http://") && !targetUrlString.startsWith("https://"))) {
     // 如果路径为空或者不是以 http/https 开头，则返回错误
-    return new Response("Invalid or missing target URL in path. Usage: /<target_url>", {
+    返回 新的 响应("路径中目标 URL 无效或缺失。用法：/<target_url>", {
       status: 400, // Bad Request
       headers: { "Content-Type": "text/plain; charset=utf-8" },
     });
@@ -74,4 +73,4 @@ async function handler(req: Request): Promise<Response> {
 
 console.log("此地址只用于帮助astrbot更快的连接github"); // Deno Deploy 会自动使用 $PORT
 // 监听端口 8000 (本地) 或 Deno Deploy 指定的端口
-serve(handler);
+Deno.serve(handler);
